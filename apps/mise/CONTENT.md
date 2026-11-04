@@ -136,9 +136,9 @@ The site is English-only today. `translationKey` is available on journal entries
 ## Checks
 
 ```bash
-pnpm --filter @example/mise typecheck
-pnpm --filter @example/mise lint
-pnpm --filter @example/mise build
+npm run typecheck --workspace=@example/mise
+npm run lint --workspace=@example/mise
+npm run build --workspace=@example/mise
 ```
 
 The build validates every frontmatter file, every site-data JSON file, and every menu/location reference used by the pages.

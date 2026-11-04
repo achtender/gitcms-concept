@@ -2,7 +2,11 @@
   "name": "gitcms-examples",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@12.16.1",
+  "packageManager": "npm@11.19.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "engines": {
     "node": ">=20"
   },
@@ -11,10 +15,10 @@
     "dev:fieldnote": "turbo run dev --filter=@example/fieldnote",
     "dev:mise": "turbo run dev --filter=@example/mise",
     "build": "turbo run build",
-    "build:fieldnote": "npm --prefix apps/fieldnote run build",
-    "build:mise": "npm --prefix apps/mise run build",
-    "start:fieldnote": "npm --prefix apps/fieldnote start",
-    "start:mise": "npm --prefix apps/mise start",
+    "build:fieldnote": "npm run build --workspace=@example/fieldnote",
+    "build:mise": "npm run build --workspace=@example/mise",
+    "start:fieldnote": "npm run start --workspace=@example/fieldnote",
+    "start:mise": "npm run start --workspace=@example/mise",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --website-url apps/fieldnote=https://fieldnote.8ndr.de --website-url apps/mise=https://mise.8ndr.de"

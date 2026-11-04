@@ -86,7 +86,7 @@ These become root-level routes such as `/about` and `/contact`.
 2. Fill in the frontmatter. Quote dates and any value containing a colon followed by a space.
 3. Write the body in MDX. Use `##` and `###` for sections that should appear in the table of contents.
 4. Add a cover image only if it helps. Omit `cover` to use the generated artwork.
-5. Run `pnpm --filter @example/fieldnote build` locally, or open a draft in GitCMS.
+5. Run `npm run build --workspace=@example/fieldnote` locally, or open a draft in GitCMS.
 6. Move the entry through review and publish it.
 
 Example:
@@ -143,9 +143,9 @@ The site is English-only today. `translationKey` is available on journal entries
 ## Checks
 
 ```bash
-pnpm --filter @example/fieldnote typecheck
-pnpm --filter @example/fieldnote lint
-pnpm --filter @example/fieldnote build
+npm run typecheck --workspace=@example/fieldnote
+npm run lint --workspace=@example/fieldnote
+npm run build --workspace=@example/fieldnote
 ```
 
 The build validates every frontmatter file, every site-data JSON file, and every internal collection reference used by the pages.

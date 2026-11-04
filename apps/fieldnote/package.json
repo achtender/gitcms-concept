@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/content": "workspace:*",
-    "@repo/ui": "workspace:*",
+    "@repo/content": "*",
+    "@repo/ui": "*",
     "next": "16.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",

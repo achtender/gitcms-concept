@@ -14,7 +14,7 @@ The visual design stays deliberately close to wireframe quality. The typography,
 - **Next.js 16** App Router, React 19
 - **Tailwind CSS v4** through `@tailwindcss/turbopack`
 - **TypeScript** in strict mode
-- **pnpm workspaces + Turborepo**
+- **npm workspaces + Turborepo**
 - **next-mdx-remote**, `remark-gfm`, `rehype-slug`, `rehype-pretty-code`, Shiki
 - **Zod** for frontmatter and site-data validation
 - **GitCMS** for editing, media, and editorial workflow
@@ -23,8 +23,8 @@ The visual design stays deliberately close to wireframe quality. The typography,
 ## Quick start
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 - Fieldnote: <http://localhost:3000>
@@ -34,17 +34,17 @@ Useful commands:
 
 | Command | What it does |
 | --- | --- |
-| `pnpm dev` | Run both sites with Turborepo |
-| `pnpm dev:fieldnote` | Run one site |
-| `pnpm dev:mise` | Run the café site |
-| `pnpm build` | Production build for every site |
-| `pnpm build:fieldnote` | Production build for Fieldnote only |
-| `pnpm build:mise` | Production build for Mise only |
-| `pnpm start:fieldnote` | Start the Fieldnote production build on port 3000 |
-| `pnpm start:mise` | Start the Mise production build on port 3000 |
-| `pnpm typecheck` | TypeScript across apps and packages |
-| `pnpm lint` | ESLint across both apps |
-| `pnpm gitcms:onboard` | Re-run the GitCMS monorepo onboarding CLI |
+| `npm run dev` | Run both sites with Turborepo |
+| `npm run dev:fieldnote` | Run one site |
+| `npm run dev:mise` | Run the café site |
+| `npm run build` | Production build for every site |
+| `npm run build:fieldnote` | Production build for Fieldnote only |
+| `npm run build:mise` | Production build for Mise only |
+| `npm run start:fieldnote` | Start the Fieldnote production build on port 3000 |
+| `npm run start:mise` | Start the Mise production build on port 3000 |
+| `npm run typecheck` | TypeScript across apps and packages |
+| `npm run lint` | ESLint across both apps |
+| `npm run gitcms:onboard` | Re-run the GitCMS monorepo onboarding CLI |
 
 > The first build downloads the Inter and Source Code Pro font files through `next/font`. A network connection is required for that step.
 
@@ -70,7 +70,7 @@ Useful commands:
 │  └─ ui/                         # design tokens, typography, prose, components
 ├─ .gitcms/                       # generated GitCMS manifest and site configs
 ├─ turbo.json
-├─ pnpm-workspace.yaml
+├─ package-lock.json
 └─ tsconfig.base.json
 ```
 
@@ -156,7 +156,7 @@ The repository already contains generated `.gitcms` configuration:
 It was generated with:
 
 ```bash
-pnpm gitcms:onboard
+npm run gitcms:onboard
 # equivalent to:
 # create-gitcms --mode monorepo \
 #   --site-root apps/fieldnote \
@@ -206,7 +206,7 @@ Match the field names to the Zod schemas in each app's `lib/schemas.ts`. Once ad
 
 `create-gitcms@0.2.4` writes config version **1.2**, with collections inline in `config.jsonc`. GitCMS may offer to upgrade the site to the newer **1.4** layout, which splits collections and site data into separate files under `.gitcms/sites/<site>/`. Accept that upgrade in the UI; no content files change.
 
-The docs mention `npx create-gitcms check` for validating a split config. That command is not present in `create-gitcms@0.2.4`. Until the CLI ships it, the reliable validation is `pnpm build`: every collection and site-data file is parsed and schema-checked during the build.
+The docs mention `npx create-gitcms check` for validating a split config. That command is not present in `create-gitcms@0.2.4`. Until the CLI ships it, the reliable validation is `npm run build`: every collection and site-data file is parsed and schema-checked during the build.
 
 ### Editorial workflow
 
@@ -225,7 +225,7 @@ The monorepo is designed for this:
 5. Adjust `--primary-hue` in `app/globals.css` if the new site needs its own accent.
 6. Re-run onboarding with all site roots:
    ```bash
-   pnpm exec create-gitcms --mode monorepo \
+   npx create-gitcms --mode monorepo \
      --site-root apps/fieldnote \
      --site-root apps/mise \
      --site-root apps/roastery \
@@ -303,30 +303,31 @@ Turn on **Build & deploy script** for each site and use the matching commands.
 **Fieldnote**
 
 ```bash
-cd "$PROJECT_DIR"
-npx --yes pnpm@12.16.1 install --frozen-lockfile --prod=false
+$XCLOUD_NPM install --no-audit --no-fund
 $XCLOUD_NPM run build:fieldnote
 ```
 
 **Mise**
 
 ```bash
-cd "$PROJECT_DIR"
-npx --yes pnpm@12.16.1 install --frozen-lockfile --prod=false
+$XCLOUD_NPM install --no-audit --no-fund
 $XCLOUD_NPM run build:mise
 ```
 
-The build script installs the pinned pnpm version with `npx` because the workspace uses `workspace:*` dependencies, which xCloud's default npm install does not understand. `--prod=false` keeps the dev dependencies that Next.js and Tailwind need at build time. Only the app for that site is compiled, not both apps.
+The repository is an npm workspace, so one install at the repository root installs the dependencies for both apps and links `@repo/ui` and `@repo/content` locally. `$XCLOUD_NPM` is the npm binary xCloud provides; using it avoids `PATH` issues on the build server. `--no-audit --no-fund` only trims install output. Only the app for that site is compiled, not both.
+
+If `NODE_ENV=production` also applies during the build, add `--include=dev` to the install command so Next.js, Tailwind, and TypeScript are installed.
+
+Do not keep a `pnpm-lock.yaml` in the repository. xCloud detects the package manager from the lockfile, and a pnpm lockfile makes it run `pnpm` on a server that only ships npm.
 
 Set the following in each site's **Environment** editor:
 
 ```text
-NODE_ENV=production
 PORT=3000
 NEXT_TELEMETRY_DISABLED=1
 ```
 
-`PORT` must match xCloud's **Application Port**. The app start scripts also bind `3000`, so the two values stay aligned.
+Next.js sets `NODE_ENV=production` itself for both the build and `next start`. `PORT` must match xCloud's **Application Port**. The app start scripts also bind `3000`, so the two values stay aligned.
 
 `outputFileTracingRoot` is already pointed at the monorepo root in each `next.config.ts`, so tracing includes the shared packages.
 
