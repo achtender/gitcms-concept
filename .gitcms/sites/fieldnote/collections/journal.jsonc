@@ -1,0 +1,49 @@
+{
+  "git_path": "/content/journal/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "date",
+      "type": "datetime",
+      "label": "Date"
+    },
+    {
+      "name": "author",
+      "type": "text",
+      "label": "Author"
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "label": "Category"
+    },
+    {
+      "name": "tags",
+      "type": "multiselect",
+      "label": "Tags",
+      "options": [
+        "gitcms",
+        "workflow"
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "featured",
+      "type": "boolean",
+      "label": "Featured",
+      "default": true
+    }
+  ]
+}

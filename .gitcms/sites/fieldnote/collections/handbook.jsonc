@@ -1,0 +1,33 @@
+{
+  "git_path": "/content/handbook/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "section",
+      "type": "text",
+      "label": "Section"
+    },
+    {
+      "name": "order",
+      "type": "number",
+      "label": "Order"
+    },
+    {
+      "name": "updated",
+      "type": "datetime",
+      "label": "Updated"
+    }
+  ]
+}

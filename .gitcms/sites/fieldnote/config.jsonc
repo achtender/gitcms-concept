@@ -1,15 +1,11 @@
 {
-  "version": "1.2",
+  "version": "1.4",
   "media": {
     "default_library": "repo_media",
     "libraries": [
       {
         "key": "repo_media",
         "label": "Repository media",
-        "driver": "git",
-        "storage": {
-          "root_path": "public"
-        },
         "references": {
           "write": {
             "mode": "root_relative",
@@ -19,6 +15,10 @@
         },
         "limits": {
           "max_file_size_mb": 10
+        },
+        "driver": "git",
+        "storage": {
+          "root_path": "public"
         }
       }
     ]
@@ -27,176 +27,10 @@
   "frontmatter_format": "yaml",
   "publishing_mode": "editorial_workflow",
   "collections": [
-    {
-      "name": "handbook",
-      "git_path": "/content/handbook/",
-      "file_extension": ".mdx",
-      "filename_pattern": "",
-      "collection_type": "flat",
-      "frontmatter_schema": [
-        {
-          "name": "title",
-          "type": "title",
-          "label": "Title"
-        },
-        {
-          "name": "description",
-          "type": "richtext",
-          "label": "Description"
-        },
-        {
-          "name": "section",
-          "type": "text",
-          "label": "Section"
-        },
-        {
-          "name": "order",
-          "type": "number",
-          "label": "Order"
-        },
-        {
-          "name": "updated",
-          "type": "datetime",
-          "label": "Updated"
-        }
-      ]
-    },
-    {
-      "name": "journal",
-      "git_path": "/content/journal/",
-      "file_extension": ".mdx",
-      "filename_pattern": "",
-      "collection_type": "flat",
-      "frontmatter_schema": [
-        {
-          "name": "title",
-          "type": "title",
-          "label": "Title"
-        },
-        {
-          "name": "description",
-          "type": "richtext",
-          "label": "Description"
-        },
-        {
-          "name": "date",
-          "type": "datetime",
-          "label": "Date"
-        },
-        {
-          "name": "author",
-          "type": "text",
-          "label": "Author"
-        },
-        {
-          "name": "category",
-          "type": "text",
-          "label": "Category"
-        },
-        {
-          "name": "tags",
-          "type": "multiselect",
-          "label": "Tags",
-          "options": [
-            "gitcms",
-            "workflow"
-          ],
-          "color": "blue"
-        },
-        {
-          "name": "featured",
-          "type": "boolean",
-          "label": "Featured",
-          "default": true
-        }
-      ]
-    },
-    {
-      "name": "pages",
-      "git_path": "/content/pages/",
-      "file_extension": ".mdx",
-      "filename_pattern": "",
-      "collection_type": "flat",
-      "frontmatter_schema": [
-        {
-          "name": "title",
-          "type": "title",
-          "label": "Title"
-        },
-        {
-          "name": "description",
-          "type": "richtext",
-          "label": "Description"
-        },
-        {
-          "name": "updated",
-          "type": "datetime",
-          "label": "Updated"
-        }
-      ]
-    },
-    {
-      "name": "authors",
-      "git_path": "/content/authors/",
-      "file_extension": ".mdx",
-      "filename_pattern": "",
-      "collection_type": "flat",
-      "frontmatter_schema": [
-        {
-          "name": "name",
-          "type": "title",
-          "label": "Name"
-        },
-        {
-          "name": "role",
-          "type": "text",
-          "label": "Role"
-        },
-        {
-          "name": "bio",
-          "type": "richtext",
-          "label": "Bio"
-        },
-        {
-          "name": "links",
-          "type": "list",
-          "label": "Links"
-        }
-      ]
-    },
-    {
-      "name": "changelog",
-      "git_path": "/content/changelog/",
-      "file_extension": ".mdx",
-      "filename_pattern": "",
-      "collection_type": "flat",
-      "frontmatter_schema": [
-        {
-          "name": "title",
-          "type": "title",
-          "label": "Title"
-        },
-        {
-          "name": "description",
-          "type": "richtext",
-          "label": "Description"
-        },
-        {
-          "name": "date",
-          "type": "datetime",
-          "label": "Date"
-        },
-        {
-          "name": "version",
-          "type": "text",
-          "label": "Version"
-        },
-        {
-          "name": "summary",
-          "type": "richtext",
-          "label": "Summary"
-        }
-      ]
-    }
+    "handbook",
+    "journal",
+    "pages",
+    "authors",
+    "changelog"
   ]
 }
