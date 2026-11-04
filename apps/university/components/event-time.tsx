@@ -1,29 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import {
   formatEventDate,
   formatEventTime,
-  getVisitorTimeZone,
   type CalendarEventSummary,
 } from "@/lib/calendar";
 
+import { useVisitorTimeZone } from "./use-visitor-environment";
+
 type EventWhen = Pick<CalendarEventSummary, "start" | "end" | "allDay">;
-
-/**
- * The server cannot know the visitor's timezone, so these components render in
- * UTC first (the SSR-safe value) and switch to the browser's zone after mount.
- */
-function useVisitorTimeZone() {
-  const [timeZone, setTimeZone] = useState("UTC");
-
-  useEffect(() => {
-    setTimeZone(getVisitorTimeZone());
-  }, []);
-
-  return timeZone;
-}
 
 export function EventDate({
   start,

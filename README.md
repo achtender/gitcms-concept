@@ -13,7 +13,7 @@ The visual design stays deliberately close to wireframe quality. The typography,
 ## Stack
 
 - **Next.js 16** App Router, React 19
-- **Tailwind CSS v4** through `@tailwindcss/turbopack`
+- **Tailwind CSS v4** through `@tailwindcss/postcss` (see [Tailwind and the webpack build](#tailwind-and-the-webpack-build))
 - **TypeScript** in strict mode
 - **npm workspaces + Turborepo**
 - **next-mdx-remote**, `remark-gfm`, `rehype-slug`, `rehype-pretty-code`, Shiki
@@ -184,7 +184,7 @@ npm run gitcms:onboard
 #   --site-root apps/university \
 #   --website-url apps/fieldnote=https://fieldnote.8ndr.de \
 #   --website-url apps/mise=https://mise.8ndr.de \
-#   --website-url apps/university=https://university.8ndr.de
+#   --website-url apps/university=https://university.spill-the.ink
 ```
 
 > **Do not hand-edit `.gitcms`.** GitCMS manages those files through its Settings UI. If you need to regenerate inference from content, re-run the onboarding CLI with `--force` and then review the result in GitCMS Settings.
@@ -255,7 +255,7 @@ The monorepo is designed for this:
      --site-root apps/roastery \
      --website-url apps/fieldnote=https://fieldnote.8ndr.de \
      --website-url apps/mise=https://mise.8ndr.de \
-     --website-url apps/university=https://university.8ndr.de \
+     --website-url apps/university=https://university.spill-the.ink \
      --website-url apps/roastery=https://roastery.example.com \
      --yes --force
    ```
@@ -314,51 +314,24 @@ All three sites use the same theme script, typography scale, prose styles, and M
 
 ## Deployment
 
-The three apps deploy as separate **Node.js (SSR)** sites on [xCloud](https://xcloud.host), from the same repository and branch.
+The three apps deploy as separate **Node.js (SSR)** sites from the same repository and branch. Each build compiles one app and leaves Next's standalone server in `.next/standalone`, which the host starts on the port from `PORT`.
 
-All three apps start on port `3000`, because that is the port configured in their `start` scripts. xCloud requires the application port to be free on the server, so run each site on a separate server. If they share a server, change an app's `start` script and its xCloud port instead.
+### Host settings
+
+These values match Hostinger's **Next.js** preset. Any Node.js host that can install an npm workspace and start the standalone server works the same way.
 
 | Setting | Fieldnote | Mise | Northbridge University |
 | --- | --- | --- | --- |
-| App type | Node.js | Node.js | Node.js |
-| Serving mode | SSR (Node process) | SSR (Node process) | SSR (Node process) |
-| Repository / branch | this repo / `main` | this repo / `main` | this repo / `main` |
-| Node.js version | 24 | 24 | 24 |
-| Application port | `3000` | `3000` | `3000` |
-| Start command | `npm run start:fieldnote` | `npm run start:mise` | `npm run start:university` |
-| Web root | blank | blank | blank |
+| Application type | Next.js | Next.js | Next.js |
+| Root directory | `apps/fieldnote` | `apps/mise` | `apps/university` |
+| Package manager | npm | npm | npm |
+| Build command | `npm run build` | `npm run build` | `npm run build` |
+| Output directory | `.next` | `.next` | `.next` |
+| Start command | automatic, `node .next/standalone/server.js` | same | same |
+| Node.js | 22 or newer | 22 or newer | 22 or newer |
 | Database | none | none | none |
 
-xCloud's Node.js runtime is server-wide, so all sites use the server's Node.js 24 installation.
-
-Turn on **Build & deploy script** for each site and use the matching commands.
-
-**Fieldnote**
-
-```bash
-$XCLOUD_NPM install --no-audit --no-fund
-$XCLOUD_NPM run build:fieldnote
-```
-
-**Mise**
-
-```bash
-$XCLOUD_NPM install --no-audit --no-fund
-$XCLOUD_NPM run build:mise
-```
-
-**Northbridge University**
-
-```bash
-$XCLOUD_NPM install --no-audit --no-fund
-$XCLOUD_NPM run build:university
-```
-
-The repository is an npm workspace, so one install at the repository root installs the dependencies for all apps and links `@repo/ui` and `@repo/content` locally. `$XCLOUD_NPM` is the npm binary xCloud provides; using it avoids `PATH` issues on the build server. `--no-audit --no-fund` only trims install output. Only the app for that site is compiled, not all of them.
-
-If `NODE_ENV=production` also applies during the build, add `--include=dev` to the install command so Next.js, Tailwind, and TypeScript are installed.
-
-Do not keep a `pnpm-lock.yaml` in the repository. xCloud detects the package manager from the lockfile, and a pnpm lockfile makes it run `pnpm` on a server that only ships npm.
+Hostinger builds Next.js apps in standalone mode and starts the bundled server itself, so `next.config.mjs` leaves `output` unset: a local `next build` stays a normal build, while the host's build produces `.next/standalone`.
 
 Set the following in each site's **Environment** editor:
 
@@ -367,15 +340,42 @@ PORT=3000
 NEXT_TELEMETRY_DISABLED=1
 ```
 
-Next.js sets `NODE_ENV=production` itself for both the build and `next start`. `PORT` must match xCloud's **Application Port**. The app start scripts also bind `3000`, so the two values stay aligned.
+The standalone server reads `PORT` and falls back to `3000`, which is also the port in each app's `start` script, so the two stay aligned. Next.js sets `NODE_ENV=production` for the build and for the server.
 
-`outputFileTracingRoot` is already pointed at the monorepo root in each `next.config.ts`, so tracing includes the shared packages.
+Install once at the repository root, then build the app for that site:
+
+```bash
+npm install --no-audit --no-fund
+npm run build --workspace=@example/university
+```
+
+The repository is an npm workspace, so one install at the root installs the dependencies for all apps and links `@repo/ui` and `@repo/content` locally. `--no-audit --no-fund` only trims install output, and only the configured app is compiled. On hosts that provide their own npm binary (xCloud uses `$XCLOUD_NPM`), use that binary instead of `npm`.
+
+If `NODE_ENV=production` also applies during the build, add `--include=dev` to the install command so Next.js, Tailwind, and TypeScript are installed.
+
+Do not keep a `pnpm-lock.yaml` in the repository. Hosts detect the package manager from the lockfile, and a pnpm lockfile makes them run `pnpm` on a server that only ships npm.
+
+### Standalone output
+
+Each `next.config.mjs` points `outputFileTracingRoot` at the repository root. Without it, the standalone output only contains files inside the app directory, and hoisted workspace dependencies such as `react` and `react-dom` are left out, so the production server fails with `Cannot find module 'react'`. With the shared tracing root, those dependencies are copied to `.next/standalone/node_modules`.
+
+A monorepo tracing root nests the generated server under `.next/standalone/apps/<app>/`, but Hostinger and other standalone Next.js runners expect `server.js`, `.next/static`, and `public` directly inside `.next/standalone`. Each app's build script therefore runs `scripts/prepare-standalone.mjs` afterwards, which flattens the nested app into `.next/standalone` and copies `.next/static` and `public` next to the server. The script is a no-op when no standalone output exists, so a plain local `next build` is unaffected.
+
+### Tailwind and the webpack build
+
+All three apps build with `next build --webpack`, and Tailwind is wired up through PostCSS rather than the Turbopack loader. Each app has a `postcss.config.mjs` that registers `@tailwindcss/postcss`, and `devDependencies` list `@tailwindcss/postcss` instead of `@tailwindcss/turbopack`.
+
+The webpack build is required on Hostinger because the build image ships a glibc older than `GLIBC_2.29`, so Next's native SWC binary cannot load. `@next/swc-wasm-nodejs` provides the WebAssembly fallback, and only the webpack builder can use it. All three apps use the same command so a host requirement cannot silently apply to only one site.
+
+`turbopack.rules` in `next.config.mjs` is ignored by a webpack build. Wiring Tailwind through it emits CSS that still contains the raw `@theme`, `@source`, and `@tailwind utilities` at-rules; browsers ignore those, so `--font-sans` stays undefined and the page renders un-styled even though every asset returns 200. PostCSS runs under both `next dev` (Turbopack) and `next build --webpack`, so one configuration covers development and production.
+
+When you touch the build setup, check the emitted CSS for a `.flex` utility and the absence of `@theme` before deploying.
 
 The production domains are already set in the content:
 
 - `apps/fieldnote/content/site/settings.json` → `https://fieldnote.8ndr.de`
 - `apps/mise/content/site/settings.json` → `https://mise.8ndr.de`
-- `apps/university/content/site/settings.json` → `https://university.8ndr.de`
+- `apps/university/content/site/settings.json` → `https://university.spill-the.ink`
 - `.gitcms/sites.jsonc` → managed through GitCMS Settings, not by hand
 
 Enable push to deploy so a commit published through GitCMS rebuilds the site. The pages are statically generated at build time, so content changes need a new deployment rather than a running CMS process.

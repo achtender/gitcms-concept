@@ -19,8 +19,6 @@ const MONTHS = [
   "December",
 ];
 
-const MONTHS_SHORT = MONTHS.map((month) => month.slice(0, 3));
-
 export const CALENDAR_WEEKDAYS = [
   "Mon",
   "Tue",
@@ -394,7 +392,7 @@ export function eventsInMonth(
   );
 }
 
-/** Browser-only helper. Call it from an effect, never during SSR. */
+/** Browser-only helper. Read it from a client snapshot (for example `useSyncExternalStore`), never during SSR. */
 export function getVisitorTimeZone() {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";

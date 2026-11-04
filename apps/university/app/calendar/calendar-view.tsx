@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { useHasMounted, useVisitorTimeZone } from "@/components/use-visitor-environment";
 import {
   CALENDAR_WEEKDAYS,
   addMonths,
@@ -12,7 +13,6 @@ import {
   formatEventClock,
   formatEventDate,
   formatEventTime,
-  getVisitorTimeZone,
   groupEventsByDate,
   initialCalendarMonth,
   monthLabel,
@@ -39,15 +39,10 @@ export function CalendarView({
   serverToday: string;
 }) {
   const [month, setMonth] = useState(initialMonth);
-  const [timeZone, setTimeZone] = useState("UTC");
+  const timeZone = useVisitorTimeZone();
   const [region, setRegion] = useState<RegionFilter>("all");
-  const [hasMounted, setHasMounted] = useState(false);
+  const hasMounted = useHasMounted();
   const adjustedMonth = useRef(false);
-
-  useEffect(() => {
-    setTimeZone(getVisitorTimeZone());
-    setHasMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!hasMounted || adjustedMonth.current) {
