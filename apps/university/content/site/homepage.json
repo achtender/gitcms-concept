@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "eyebrow": "Northbridge University / Autumn term",
+    "title": "A small university with a long view.",
+    "description": "A teaching-first university where seminars stay small, the library stays open late, and the calendar is part of the intellectual life of the campus. Everything here is edited in Markdown and published through GitCMS.",
+    "actions": [
+      { "label": "Explore the calendar", "href": "/calendar", "variant": "primary" },
+      { "label": "Admissions", "href": "/admissions", "variant": "secondary" }
+    ]
+  },
+  "featured": ["a-campus-that-keeps-its-doors-open", "designing-a-calendar-people-actually-read"],
+  "panel": {
+    "label": "This month",
+    "title": "Autumn open day",
+    "body": "Tour the quad, meet the faculty, and sit in on a sample seminar. The full schedule lives in the campus calendar.",
+    "href": "/calendar/autumn-open-day",
+    "linkLabel": "See the day"
+  }
+}

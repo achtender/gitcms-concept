@@ -1,11 +1,12 @@
-# GitCMS starter: two sites, one monorepo
+# GitCMS starter: three sites, one monorepo
 
-A production-shaped example of running **multiple content sites on GitCMS** from a single Next.js monorepo. It includes two complete sites, a shared design system, shared content tooling, and generated `.gitcms` configuration.
+A production-shaped example of running **multiple content sites on GitCMS** from a single Next.js monorepo. It includes three complete sites, a shared design system, shared content tooling, and generated `.gitcms` configuration.
 
 | Site | What it is | Routes |
 | --- | --- | --- |
 | **Fieldnote** (`apps/fieldnote`) | An editorial journal and internal handbook | Journal, authors, changelog, handbook, CMS-managed pages |
 | **Mise** (`apps/mise`) | A neighbourhood café | Menu, locations, journal, CMS-managed pages |
+| **Northbridge University** (`apps/university`) | A small university example | Calendar, journal, handbook, people, changelog, CMS-managed pages |
 
 The visual design stays deliberately close to wireframe quality. The typography, tokens, and component conventions follow the [Supabase design system](https://supabase.com/design-system), so the foundation is real even where the layouts are intentionally simple.
 
@@ -29,21 +30,25 @@ npm run dev
 
 - Fieldnote: <http://localhost:3000>
 - Mise: <http://localhost:3001>
+- Northbridge University: <http://localhost:3002>
 
 Useful commands:
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Run both sites with Turborepo |
+| `npm run dev` | Run all sites with Turborepo |
 | `npm run dev:fieldnote` | Run one site |
 | `npm run dev:mise` | Run the café site |
+| `npm run dev:university` | Run the university site |
 | `npm run build` | Production build for every site |
 | `npm run build:fieldnote` | Production build for Fieldnote only |
 | `npm run build:mise` | Production build for Mise only |
+| `npm run build:university` | Production build for Northbridge University only |
 | `npm run start:fieldnote` | Start the Fieldnote production build on port 3000 |
 | `npm run start:mise` | Start the Mise production build on port 3000 |
+| `npm run start:university` | Start the university production build on port 3000 |
 | `npm run typecheck` | TypeScript across apps and packages |
-| `npm run lint` | ESLint across both apps |
+| `npm run lint` | ESLint across all apps |
 | `npm run gitcms:onboard` | Re-run the GitCMS monorepo onboarding CLI |
 
 > The first build downloads the Inter and Source Code Pro font files through `next/font`. A network connection is required for that step.
@@ -64,7 +69,8 @@ Useful commands:
 │  │  │  └─ site/                 # homepage.json, navigation.json, settings.json
 │  │  ├─ lib/                     # Zod schemas, loaders, site-data imports
 │  │  └─ CONTENT.md               # editorial guide read by GitCMS
-│  └─ mise/                       # same shape, café collections
+│  ├─ mise/                       # same shape, café collections
+│  └─ university/                 # journal, handbook, people, and calendar
 ├─ packages/
 │  ├─ content/                    # generic collection loader + content utilities
 │  └─ ui/                         # design tokens, typography, prose, components
@@ -88,7 +94,7 @@ A small, framework-agnostic content layer:
 - `getHeadings` extracts an H2/H3 table of contents and skips fenced code blocks.
 - `slugify`, `formatDate`, `readingTime`, `groupBy`, and `renderRss` are shared helpers.
 
-The loader is intentionally generic. It knows nothing about Fieldnote or Mise, which is what makes a third site cheap to add.
+The loader is intentionally generic. It knows nothing about Fieldnote, Mise, or Northbridge, which is what makes another site cheap to add.
 
 ### `@repo/ui`
 
@@ -101,7 +107,7 @@ The design system:
 - Components — header, footer, theme toggle, entry cards, covers, avatars, badges, page headers, TOC, callouts, empty states.
 - `@repo/ui/markdown` — the server-side MDX renderer with GFM, heading IDs, and syntax highlighting.
 
-The theme follows Supabase's layering: components reference **semantic roles**, and each site changes a small number of raw values. Fieldnote uses the default green hue. Mise sets `--primary-hue: 35` in [`apps/mise/app/globals.css`](apps/mise/app/globals.css), and every surface, border, and accent shifts with it.
+The theme follows Supabase's layering: components reference **semantic roles**, and each site changes a small number of raw values. Fieldnote uses the default green hue. Mise sets `--primary-hue: 35` in [`apps/mise/app/globals.css`](apps/mise/app/globals.css), and Northbridge sets `--primary-hue: 255` in [`apps/university/app/globals.css`](apps/university/app/globals.css). Every surface, border, and accent shifts with the hue.
 
 Theme switching is handled by a tiny inline script before paint, then by `ThemeToggle`. There is no theme library.
 
@@ -128,6 +134,19 @@ Content is plain Markdown/MDX in Git. Frontmatter is the schema, and Zod is the 
 | `journal` | `content/journal` | `title`, `description`, `date`, `author`, `tags`, `cover`, `draft` |
 | `pages` | `content/pages` | `title`, `description`, `updated` |
 
+### Northbridge University
+
+| Collection | Path | Notable fields |
+| --- | --- | --- |
+| `calendar` | `content/calendar` | `title`, `description`, `date`, `startTime`, `endTime`, `location`, `category`, `audience`, `registrationUrl`, `featured`, `draft` |
+| `journal` | `content/journal` | `title`, `description`, `date`, `author`, `category`, `tags`, `cover`, `featured`, `draft` |
+| `authors` | `content/authors` | `name`, `role`, `bio`, `avatar`, `links` |
+| `handbook` | `content/handbook` | `title`, `description`, `section`, `order`, `updated` |
+| `changelog` | `content/changelog` | `title`, `date`, `version`, `summary`, `draft` |
+| `pages` | `content/pages` | `title`, `description`, `updated` |
+
+The university calendar is the important addition. Each event is an MDX entry with structured date, time, location, category, and audience fields. The same collection powers the homepage preview, the month grid at `/calendar`, and the event detail pages at `/calendar/[slug]`.
+
 ### Site data
 
 Each site has three JSON files under `content/site/`:
@@ -150,7 +169,8 @@ The repository already contains generated `.gitcms` configuration:
 ├─ README.md
 └─ sites/
    ├─ fieldnote/config.jsonc
-   └─ mise/config.jsonc
+   ├─ mise/config.jsonc
+   └─ university/config.jsonc
 ```
 
 It was generated with:
@@ -161,8 +181,10 @@ npm run gitcms:onboard
 # create-gitcms --mode monorepo \
 #   --site-root apps/fieldnote \
 #   --site-root apps/mise \
+#   --site-root apps/university \
 #   --website-url apps/fieldnote=https://fieldnote.8ndr.de \
-#   --website-url apps/mise=https://mise.8ndr.de
+#   --website-url apps/mise=https://mise.8ndr.de \
+#   --website-url apps/university=https://university.8ndr.de
 ```
 
 > **Do not hand-edit `.gitcms`.** GitCMS manages those files through its Settings UI. If you need to regenerate inference from content, re-run the onboarding CLI with `--force` and then review the result in GitCMS Settings.
@@ -171,7 +193,7 @@ npm run gitcms:onboard
 
 1. Push the repository to GitHub.
 2. Open [gitcms.dev](https://gitcms.dev) and connect the repository.
-3. GitCMS reads `.gitcms/sites.jsonc` and offers **Fieldnote** and **Mise** as separate sites.
+3. GitCMS reads `.gitcms/sites.jsonc` and offers **Fieldnote**, **Mise**, and **Northbridge University** as separate sites.
 4. Open each site's **Settings**.
 
 ### Review the generated settings
@@ -186,6 +208,7 @@ npm run gitcms:onboard
 Because inference samples content, some optional fields are not in the generated schema. Add them in Settings where you want editors to control them:
 
 - Journal: `cover` (media), `coverAlt` (text), `draft` (boolean, default `false`), `translationKey` (text).
+- Calendar: `startTime` and `endTime` (text, 24-hour), `audience` (text), `registrationUrl` (URL), `featured` and `draft` (boolean).
 - Menu: `available` (boolean, default `true`); expand the `dietary` options beyond the sampled value.
 - Tags and dietary fields: replace the inferred option list with your real vocabulary.
 - Changelog: the generated schema may include a `description` field that the code does not use. Remove it in Settings if you prefer a tighter editor.
@@ -212,9 +235,9 @@ The docs mention `npx create-gitcms check` for validating a split config. That c
 
 With `editorial_workflow` enabled, editors work on a content board (Ideas → Draft → Review → Published). Publishing merges a pull request into the default branch. The repository remains the source of truth, and content history is Git history.
 
-Each site has a `CONTENT.md` that GitCMS shows as editorial guidance. See [`apps/fieldnote/CONTENT.md`](apps/fieldnote/CONTENT.md) and [`apps/mise/CONTENT.md`](apps/mise/CONTENT.md).
+Each site has a `CONTENT.md` that GitCMS shows as editorial guidance. See [`apps/fieldnote/CONTENT.md`](apps/fieldnote/CONTENT.md), [`apps/mise/CONTENT.md`](apps/mise/CONTENT.md), and [`apps/university/CONTENT.md`](apps/university/CONTENT.md).
 
-## Adding a third site
+## Adding another site
 
 The monorepo is designed for this:
 
@@ -228,9 +251,11 @@ The monorepo is designed for this:
    npx create-gitcms --mode monorepo \
      --site-root apps/fieldnote \
      --site-root apps/mise \
+     --site-root apps/university \
      --site-root apps/roastery \
      --website-url apps/fieldnote=https://fieldnote.8ndr.de \
      --website-url apps/mise=https://mise.8ndr.de \
+     --website-url apps/university=https://university.8ndr.de \
      --website-url apps/roastery=https://roastery.example.com \
      --yes --force
    ```
@@ -277,26 +302,34 @@ Avoid putting locale strings directly in components; keep copy in site data or c
 - Per-site theming via `--primary-hue: 35`
 - Generated cover artwork when no image is supplied
 
-Both sites use the same theme script, typography scale, prose styles, and MDX pipeline.
+**Northbridge University**
+
+- A GitCMS-managed `calendar` collection with structured dates, times, locations, categories, and audiences
+- A client-side month grid with previous/next navigation and an agenda for the selected month
+- Event detail routes at `/calendar/[slug]`, plus upcoming events on the homepage and in the sitemap
+- A university content model reusing the journal, handbook, people, changelog, and page collections from Fieldnote
+- Per-site theming via `--primary-hue: 255`
+
+All three sites use the same theme script, typography scale, prose styles, and MDX pipeline.
 
 ## Deployment
 
-The two apps deploy as separate **Node.js (SSR)** sites on [xCloud](https://xcloud.host), from the same repository and branch.
+The three apps deploy as separate **Node.js (SSR)** sites on [xCloud](https://xcloud.host), from the same repository and branch.
 
-Both apps start on port `3000`, because that is the port configured in their `start` scripts. xCloud requires the application port to be free on the server, so run the two sites on separate servers. If they share a server, change one app's `start` script and its xCloud port instead.
+All three apps start on port `3000`, because that is the port configured in their `start` scripts. xCloud requires the application port to be free on the server, so run each site on a separate server. If they share a server, change an app's `start` script and its xCloud port instead.
 
-| Setting | Fieldnote | Mise |
-| --- | --- | --- |
-| App type | Node.js | Node.js |
-| Serving mode | SSR (Node process) | SSR (Node process) |
-| Repository / branch | this repo / `main` | this repo / `main` |
-| Node.js version | 24 | 24 |
-| Application port | `3000` | `3000` |
-| Start command | `npm run start:fieldnote` | `npm run start:mise` |
-| Web root | blank | blank |
-| Database | none | none |
+| Setting | Fieldnote | Mise | Northbridge University |
+| --- | --- | --- | --- |
+| App type | Node.js | Node.js | Node.js |
+| Serving mode | SSR (Node process) | SSR (Node process) | SSR (Node process) |
+| Repository / branch | this repo / `main` | this repo / `main` | this repo / `main` |
+| Node.js version | 24 | 24 | 24 |
+| Application port | `3000` | `3000` | `3000` |
+| Start command | `npm run start:fieldnote` | `npm run start:mise` | `npm run start:university` |
+| Web root | blank | blank | blank |
+| Database | none | none | none |
 
-xCloud's Node.js runtime is server-wide, so both sites use the server's Node.js 24 installation.
+xCloud's Node.js runtime is server-wide, so all sites use the server's Node.js 24 installation.
 
 Turn on **Build & deploy script** for each site and use the matching commands.
 
@@ -314,7 +347,14 @@ $XCLOUD_NPM install --no-audit --no-fund
 $XCLOUD_NPM run build:mise
 ```
 
-The repository is an npm workspace, so one install at the repository root installs the dependencies for both apps and links `@repo/ui` and `@repo/content` locally. `$XCLOUD_NPM` is the npm binary xCloud provides; using it avoids `PATH` issues on the build server. `--no-audit --no-fund` only trims install output. Only the app for that site is compiled, not both.
+**Northbridge University**
+
+```bash
+$XCLOUD_NPM install --no-audit --no-fund
+$XCLOUD_NPM run build:university
+```
+
+The repository is an npm workspace, so one install at the repository root installs the dependencies for all apps and links `@repo/ui` and `@repo/content` locally. `$XCLOUD_NPM` is the npm binary xCloud provides; using it avoids `PATH` issues on the build server. `--no-audit --no-fund` only trims install output. Only the app for that site is compiled, not all of them.
 
 If `NODE_ENV=production` also applies during the build, add `--include=dev` to the install command so Next.js, Tailwind, and TypeScript are installed.
 
@@ -335,6 +375,7 @@ The production domains are already set in the content:
 
 - `apps/fieldnote/content/site/settings.json` → `https://fieldnote.8ndr.de`
 - `apps/mise/content/site/settings.json` → `https://mise.8ndr.de`
+- `apps/university/content/site/settings.json` → `https://university.8ndr.de`
 - `.gitcms/sites.jsonc` → managed through GitCMS Settings, not by hand
 
 Enable push to deploy so a commit published through GitCMS rebuilds the site. The pages are statically generated at build time, so content changes need a new deployment rather than a running CMS process.
@@ -344,5 +385,6 @@ Enable push to deploy so a commit published through GitCMS rebuilds the site. Th
 - Example URLs, email addresses, phone numbers, and social links are placeholders.
 - Cover images are generated with CSS; no external image host is required. Add real images to `public/` and set `cover: /images/...` when you have them.
 - The `.gitcms` config is intentionally generated rather than tuned by hand. Treat the Settings UI as the source of truth for collection fields.
+- The university calendar is static at build time. Events and month navigation are generated from the `calendar` collection, so a published event appears after the next deployment.
 - The repository uses GitCMS config version 1.4. `create-gitcms@0.2.4` still generates 1.2, so accept the 1.4 upgrade in GitCMS when prompted.
 - The design token layer is adapted from Supabase's Apache-2.0-licensed design system. See the comments in `packages/ui/src/styles/`.

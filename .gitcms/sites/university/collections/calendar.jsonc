@@ -1,0 +1,66 @@
+{
+  "git_path": "/content/calendar/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "date",
+      "type": "datetime",
+      "label": "Date"
+    },
+    {
+      "name": "startTime",
+      "type": "text",
+      "label": "Start time"
+    },
+    {
+      "name": "endTime",
+      "type": "text",
+      "label": "End time"
+    },
+    {
+      "name": "location",
+      "type": "text",
+      "label": "Location"
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "label": "Category"
+    },
+    {
+      "name": "audience",
+      "type": "text",
+      "label": "Audience"
+    },
+    {
+      "name": "registrationUrl",
+      "type": "url",
+      "label": "Registration URL",
+      "required": false
+    },
+    {
+      "name": "featured",
+      "type": "boolean",
+      "label": "Featured",
+      "default": false
+    },
+    {
+      "name": "draft",
+      "type": "boolean",
+      "label": "Draft",
+      "default": false
+    }
+  ]
+}

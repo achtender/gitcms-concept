@@ -1,0 +1,49 @@
+{
+  "git_path": "/content/authors/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "name",
+      "type": "title",
+      "label": "Name"
+    },
+    {
+      "name": "role",
+      "type": "text",
+      "label": "Role"
+    },
+    {
+      "name": "bio",
+      "type": "richtext",
+      "label": "Bio"
+    },
+    {
+      "name": "avatar",
+      "type": "image",
+      "label": "Avatar",
+      "required": false
+    },
+    {
+      "name": "links",
+      "type": "list",
+      "label": "Links",
+      "itemLabel": "{label}",
+      "fields": [
+        {
+          "name": "label",
+          "type": "text",
+          "label": "Label",
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "url",
+          "label": "Href",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

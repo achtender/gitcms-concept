@@ -1,0 +1,31 @@
+{
+  "primary": [
+    { "label": "Calendar", "href": "/calendar" },
+    { "label": "Journal", "href": "/journal" },
+    { "label": "Handbook", "href": "/handbook" },
+    { "label": "People", "href": "/authors" },
+    { "label": "About", "href": "/about" }
+  ],
+  "footer": [
+    {
+      "title": "Study",
+      "items": [
+        { "label": "Admissions", "href": "/admissions" },
+        { "label": "Calendar", "href": "/calendar" },
+        { "label": "Student handbook", "href": "/handbook" }
+      ]
+    },
+    {
+      "title": "Campus",
+      "items": [
+        { "label": "About", "href": "/about" },
+        { "label": "People", "href": "/authors" },
+        { "label": "Contact", "href": "/contact" }
+      ]
+    },
+    {
+      "title": "Site",
+      "items": [{ "label": "Journal", "href": "/journal" }]
+    }
+  ]
+}

@@ -14,14 +14,17 @@
     "dev": "turbo run dev",
     "dev:fieldnote": "turbo run dev --filter=@example/fieldnote",
     "dev:mise": "turbo run dev --filter=@example/mise",
+    "dev:university": "turbo run dev --filter=@example/university",
     "build": "turbo run build",
     "build:fieldnote": "npm run build --workspace=@example/fieldnote",
     "build:mise": "npm run build --workspace=@example/mise",
+    "build:university": "npm run build --workspace=@example/university",
     "start:fieldnote": "npm run start --workspace=@example/fieldnote",
     "start:mise": "npm run start --workspace=@example/mise",
+    "start:university": "npm run start --workspace=@example/university",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --website-url apps/fieldnote=https://fieldnote.8ndr.de --website-url apps/mise=https://mise.8ndr.de"
+    "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --site-root apps/university --website-url apps/fieldnote=https://fieldnote.8ndr.de --website-url apps/mise=https://mise.8ndr.de --website-url apps/university=https://university.8ndr.de"
   },
   "devDependencies": {
     "create-gitcms": "^0.2.4",

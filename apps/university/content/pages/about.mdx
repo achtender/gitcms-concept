@@ -1,0 +1,22 @@
+---
+title: About Northbridge
+description: A small teaching university with a public journal, a working calendar, and a deliberately plain website.
+updated: "2026-10-01"
+---
+
+Northbridge is a fictional university built to show how a content site can be honest about its own operations. The academic programme is imagined; the content model is real.
+
+## What the example demonstrates
+
+- A journal, a student handbook, a people directory, and CMS-managed pages
+- A calendar collection edited through GitCMS and rendered as a month grid
+- Shared design tokens and components across three sites in one repository
+- Build-time validation for every content file
+
+## The idea of the place
+
+The university in these pages is small on purpose. Seminars are capped, the library keeps late hours, and the calendar is treated as part of the teaching environment rather than a noticeboard.
+
+## How the site is made
+
+Content lives in Markdown and JSON under `apps/university/content`. The site is a Next.js app in the same monorepo as Fieldnote and Mise. Publishing happens through a pull request, so the public history of the site is also the public history of its content.

@@ -12,6 +12,12 @@
       "display_name": "Mise",
       "website_url": "https://mise.8ndr.de",
       "root_path": "apps/mise"
+    },
+    {
+      "key": "university",
+      "display_name": "Northbridge University",
+      "website_url": "https://university.8ndr.de",
+      "root_path": "apps/university"
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "git_path": "/content/changelog/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "date",
+      "type": "datetime",
+      "label": "Date"
+    },
+    {
+      "name": "version",
+      "type": "text",
+      "label": "Version"
+    },
+    {
+      "name": "summary",
+      "type": "richtext",
+      "label": "Summary"
+    },
+    {
+      "name": "draft",
+      "type": "boolean",
+      "label": "Draft",
+      "default": false
+    }
+  ]
+}

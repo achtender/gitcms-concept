@@ -1,0 +1,79 @@
+{
+  "git_path": "/content/journal/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "date",
+      "type": "datetime",
+      "label": "Date"
+    },
+    {
+      "name": "author",
+      "type": "text",
+      "label": "Author"
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "label": "Category"
+    },
+    {
+      "name": "tags",
+      "type": "multiselect",
+      "label": "Tags",
+      "options": [
+        "campus",
+        "student-life",
+        "calendar",
+        "gitcms",
+        "design",
+        "teaching",
+        "seminars",
+        "library"
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "cover",
+      "type": "image",
+      "label": "Cover",
+      "required": false
+    },
+    {
+      "name": "coverAlt",
+      "type": "text",
+      "label": "Cover alt text",
+      "required": false
+    },
+    {
+      "name": "featured",
+      "type": "boolean",
+      "label": "Featured",
+      "default": false
+    },
+    {
+      "name": "draft",
+      "type": "boolean",
+      "label": "Draft",
+      "default": false
+    },
+    {
+      "name": "translationKey",
+      "type": "text",
+      "label": "Translation key",
+      "required": false
+    }
+  ]
+}

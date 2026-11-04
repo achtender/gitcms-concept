@@ -1,0 +1,12 @@
+{
+  "name": "Northbridge University",
+  "tagline": "A small university with a long view.",
+  "description": "Northbridge University is a teaching-first university with small seminars, a working campus calendar, and a public journal about how the place runs.",
+  "url": "https://university.8ndr.de",
+  "locale": "en",
+  "email": "hello@university.8ndr.de",
+  "socials": [
+    { "label": "Instagram", "href": "https://instagram.com/" },
+    { "label": "RSS", "href": "/rss.xml" }
+  ]
+}

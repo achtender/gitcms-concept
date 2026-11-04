@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@repo/ui/styles/tokens.css";
+@import "@repo/ui/styles/typography.css";
+@import "@repo/ui/styles/prose.css";
+@import "@repo/ui/styles/components.css";
+
+@source "../../../packages/ui/src";
+
+/*
+ * Northbridge University keeps the shared token layer but moves the primary
+ * hue to a deep academic blue. Every surface and accent follows automatically.
+ */
+:root {
+  --primary-hue: 255;
+  --brand: hsl(222 65% 45%);
+}
