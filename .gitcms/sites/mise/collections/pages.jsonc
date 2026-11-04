@@ -1,0 +1,23 @@
+{
+  "git_path": "/content/pages/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "updated",
+      "type": "datetime",
+      "label": "Updated"
+    }
+  ]
+}

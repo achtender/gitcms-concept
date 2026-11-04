@@ -1,0 +1,48 @@
+{
+  "git_path": "/content/menu/",
+  "file_extension": ".mdx",
+  "filename_pattern": "",
+  "collection_type": "flat",
+  "frontmatter_schema": [
+    {
+      "name": "title",
+      "type": "title",
+      "label": "Title"
+    },
+    {
+      "name": "description",
+      "type": "richtext",
+      "label": "Description"
+    },
+    {
+      "name": "category",
+      "type": "text",
+      "label": "Category"
+    },
+    {
+      "name": "price",
+      "type": "number",
+      "label": "Price"
+    },
+    {
+      "name": "dietary",
+      "type": "multiselect",
+      "label": "Dietary",
+      "options": [
+        "Vegetarian"
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "order",
+      "type": "number",
+      "label": "Order"
+    },
+    {
+      "name": "featured",
+      "type": "boolean",
+      "label": "Featured",
+      "default": true
+    }
+  ]
+}
