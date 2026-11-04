@@ -1,0 +1,29 @@
+---
+title: About Fieldnote
+description: A small editorial studio writing about software craft, design systems, and the work of shipping things that last.
+updated: "2026-09-01"
+---
+
+Fieldnote is a working journal and an internal handbook. It is also a demonstration: a complete, production-shaped content site running on GitCMS without a database.
+
+## What we publish
+
+The **journal** holds finished essays. The **handbook** holds the practices behind them. The **changelog** records changes to the site itself.
+
+## How it is built
+
+This site is a Next.js application in a Turborepo monorepo. It shares its design system and content helpers with [Mise](https://mise.example.com), a café site built from the same starting point.
+
+- Content lives in `content/` as Markdown and MDX.
+- Frontmatter is validated with Zod at build time.
+- Site settings and navigation are JSON files managed through GitCMS Settings.
+- The design system follows Supabase's semantic token and typography patterns.
+
+<Callout variant="note">
+  The example URLs in this project are placeholders. Replace them in
+  `content/site/settings.json` and in the GitCMS site manifest before deploying.
+</Callout>
+
+## Who writes here
+
+Mara and Theo. You can find their profiles on the [authors page](/authors).

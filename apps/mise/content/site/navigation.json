@@ -1,0 +1,26 @@
+{
+  "primary": [
+    { "label": "Menu", "href": "/menu" },
+    { "label": "Journal", "href": "/journal" },
+    { "label": "Locations", "href": "/locations" },
+    { "label": "About", "href": "/about" }
+  ],
+  "footer": [
+    {
+      "title": "Visit",
+      "items": [
+        { "label": "Menu", "href": "/menu" },
+        { "label": "Locations", "href": "/locations" },
+        { "label": "Contact", "href": "/contact" }
+      ]
+    },
+    {
+      "title": "Read",
+      "items": [
+        { "label": "Journal", "href": "/journal" },
+        { "label": "RSS feed", "href": "/rss.xml" },
+        { "label": "About Mise", "href": "/about" }
+      ]
+    }
+  ]
+}

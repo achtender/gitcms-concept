@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "sites": [
+    {
+      "key": "fieldnote",
+      "display_name": "Fieldnote",
+      "website_url": "https://fieldnote.example.com",
+      "root_path": "apps/fieldnote"
+    },
+    {
+      "key": "mise",
+      "display_name": "Mise",
+      "website_url": "https://mise.example.com",
+      "root_path": "apps/mise"
+    }
+  ]
+}

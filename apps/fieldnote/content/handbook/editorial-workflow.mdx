@@ -1,0 +1,40 @@
+---
+title: Editorial workflow
+description: From an idea in the notebook to a merged pull request. The short path we use for every journal entry.
+section: Publishing
+order: 1
+updated: "2026-08-20"
+---
+
+Every entry moves through four states. The names are deliberately boring.
+
+## 1. Notebook
+
+An idea lives in the shared notebook until someone is willing to own it. A good notebook note contains one sentence about the reader and one sentence about the point.
+
+## 2. Draft
+
+The draft lives on a branch. It does not need to be beautiful, but it does need a title, a description, and a date.
+
+<Callout variant="tip">
+  Write the description before the body. If you cannot describe the piece in one
+  sentence, the piece probably has two subjects.
+</Callout>
+
+## 3. Review
+
+A review checks three things:
+
+- Is the claim clear?
+- Is the structure visible in the headings?
+- Does the ending give the reader something to do?
+
+Line edits come last. It is a waste of attention to polish a paragraph that may not survive the structural pass.
+
+## 4. Publish
+
+Merging the pull request publishes the entry. GitCMS handles the editorial state; the repository handles the history. There is no separate deploy step for content.
+
+## After publishing
+
+Update the changelog only when the site itself changed. An article is not a release note. If a piece needs a correction, edit it in place and add a line to the bottom explaining what changed.

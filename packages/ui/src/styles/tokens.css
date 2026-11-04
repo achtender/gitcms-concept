@@ -1,0 +1,158 @@
+/*
+ * Theme tokens adapted from the Supabase design system.
+ *
+ * The important part is the layering: components use semantic Tailwind
+ * utilities (bg-surface-100, text-muted-foreground, border-border), and the
+ * raw values live here as CSS properties. Each site can change `--primary-hue`
+ * without touching a single component.
+ *
+ * Source: https://supabase.com/design-system/docs/theming
+ * Supabase source is Apache-2.0 licensed.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --primary-hue: 157.5;
+  --surface-hue-offset: 0;
+  --surface-hue: calc(var(--primary-hue) + var(--surface-hue-offset));
+
+  /* Surfaces */
+  --background: oklch(0.995 0.002 var(--surface-hue));
+  --surface-75: oklch(0.985 0.003 var(--surface-hue));
+  --surface-100: oklch(0.972 0.004 var(--surface-hue));
+  --surface-200: oklch(0.952 0.005 var(--surface-hue));
+  --surface-300: oklch(0.925 0.006 var(--surface-hue));
+  --surface-400: oklch(0.895 0.007 var(--surface-hue));
+  --overlay: oklch(1 0 0);
+  --control: oklch(1 0 0);
+
+  /* Text */
+  --foreground: oklch(0.16 0.006 var(--surface-hue));
+  --muted-foreground: oklch(0.45 0.006 var(--surface-hue));
+  --tertiary-foreground: oklch(0.58 0.005 var(--surface-hue));
+
+  /* Borders */
+  --border: oklch(0.905 0.006 var(--surface-hue));
+  --border-strong: oklch(0.82 0.007 var(--surface-hue));
+  --border-control: oklch(0.78 0.008 var(--surface-hue));
+
+  /* Accent */
+  --primary: oklch(0.525 0.12 var(--primary-hue));
+  --primary-hover: oklch(0.49 0.12 var(--primary-hue));
+  --primary-foreground: oklch(0.99 0.003 var(--primary-hue));
+  --primary-solid: var(--primary);
+  --primary-solid-foreground: var(--primary-foreground);
+  --brand: hsl(153.1 60.2% 52.7%);
+
+  /* Status */
+  --warning: oklch(0.75 0.15 75);
+  --destructive: oklch(0.55 0.18 25);
+
+  /* Focus and selection */
+  --ring: oklch(0.55 0.12 var(--primary-hue) / 55%);
+  --selection: oklch(0.525 0.12 var(--primary-hue) / 18%);
+
+  /* Shape */
+  --radius: 0.375rem;
+}
+
+[data-theme="dark"],
+.dark {
+  --background: oklch(0.16 0.005 var(--surface-hue));
+  --surface-75: oklch(0.18 0.006 var(--surface-hue));
+  --surface-100: oklch(0.195 0.007 var(--surface-hue));
+  --surface-200: oklch(0.215 0.008 var(--surface-hue));
+  --surface-300: oklch(0.24 0.009 var(--surface-hue));
+  --surface-400: oklch(0.27 0.01 var(--surface-hue));
+  --overlay: oklch(0.22 0.008 var(--surface-hue));
+  --control: oklch(0.22 0.008 var(--surface-hue));
+
+  --foreground: oklch(0.95 0.004 var(--surface-hue));
+  --muted-foreground: oklch(0.76 0.005 var(--surface-hue));
+  --tertiary-foreground: oklch(0.62 0.005 var(--surface-hue));
+
+  --border: oklch(1 0 0 / 10%);
+  --border-strong: oklch(1 0 0 / 20%);
+  --border-control: oklch(1 0 0 / 28%);
+
+  --primary: oklch(0.78 0.14 var(--primary-hue));
+  --primary-hover: oklch(0.82 0.14 var(--primary-hue));
+  --primary-foreground: oklch(0.16 0.005 var(--primary-hue));
+  --primary-solid: oklch(0.44 0.11 var(--primary-hue));
+  --primary-solid-foreground: oklch(0.95 0.003 var(--primary-hue));
+
+  --warning: oklch(0.8 0.14 75);
+  --destructive: oklch(0.62 0.17 25);
+
+  --ring: oklch(0.78 0.14 var(--primary-hue) / 55%);
+  --selection: oklch(0.78 0.14 var(--primary-hue) / 22%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-light: var(--muted-foreground);
+  --color-foreground-lighter: var(--tertiary-foreground);
+  --color-foreground-muted: var(--tertiary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+
+  --color-surface-75: var(--surface-75);
+  --color-surface-100: var(--surface-100);
+  --color-surface-200: var(--surface-200);
+  --color-surface-300: var(--surface-300);
+  --color-surface-400: var(--surface-400);
+  --color-overlay: var(--overlay);
+  --color-control: var(--control);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-control: var(--border-control);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-solid: var(--primary-solid);
+  --color-primary-solid-foreground: var(--primary-solid-foreground);
+  --color-brand: var(--brand);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-source-code-pro), ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"],
+  .dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--selection);
+  }
+}

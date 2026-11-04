@@ -1,0 +1,13 @@
+{
+  "name": "Mise",
+  "tagline": "Coffee, pastry, and a table to sit at.",
+  "description": "Mise is a neighbourhood café with two rooms: one downtown, one by the harbour. Coffee, pastry, and a menu that changes with the week.",
+  "url": "https://mise.example.com",
+  "locale": "en",
+  "email": "hello@mise.example.com",
+  "currency": "USD",
+  "socials": [
+    { "label": "Instagram", "href": "https://instagram.com/" },
+    { "label": "RSS", "href": "/rss.xml" }
+  ]
+}

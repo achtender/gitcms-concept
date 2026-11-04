@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "@repo/ui/styles/tokens.css";
+@import "@repo/ui/styles/typography.css";
+@import "@repo/ui/styles/prose.css";
+@import "@repo/ui/styles/components.css";
+
+@source "../../../packages/ui/src";
+
+/* Fieldnote keeps the default Supabase green hue. */

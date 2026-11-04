@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "eyebrow": "Fieldnote / Issue 04",
+    "title": "Notes on building software that leaves room to think.",
+    "description": "A working journal about calm software, careful design, and the small editorial teams who ship it. Written slowly, edited in public, published with GitCMS.",
+    "actions": [
+      { "label": "Read the journal", "href": "/journal", "variant": "primary" },
+      { "label": "Browse the handbook", "href": "/handbook", "variant": "secondary" }
+    ]
+  },
+  "featured": ["the-case-for-slow-software", "a-small-cms-for-a-small-team"],
+  "panel": {
+    "label": "Currently",
+    "title": "A field guide to the second read",
+    "body": "Our notebook on editing, re-reading, and why the best interfaces reward attention instead of demanding it.",
+    "href": "/journal/designing-for-the-second-read",
+    "linkLabel": "Open the note"
+  }
+}

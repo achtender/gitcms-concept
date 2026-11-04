@@ -1,0 +1,30 @@
+---
+title: Colophon
+description: The type, tools, and conventions behind this site.
+updated: "2026-09-12"
+---
+
+## Typography
+
+The type scale follows the [Supabase design system](https://supabase.com/design-system/docs/typography). Body text uses Inter. Code uses Source Code Pro. The scale is intentionally narrow: a handful of sizes, consistent line height, and restrained weight changes.
+
+## Colour
+
+Colours are defined as OKLCH semantic tokens. Components reference roles such as `surface-100`, `muted-foreground`, and `primary` rather than raw values. Fieldnote uses the default Supabase green hue.
+
+## Content
+
+Content is Markdown and MDX, stored in Git. Frontmatter is validated with Zod. Headings are extracted at build time to build the table of contents; the rendered MDX uses the same GitHub-style slugger.
+
+## Stack
+
+- Next.js App Router
+- React 19
+- Tailwind CSS v4
+- next-mdx-remote
+- Shiki with a dual light/dark theme
+- GitCMS for editing and editorial workflow
+
+## Licence
+
+Example content is provided for demonstration. The design token structure is adapted from Supabase, which is Apache-2.0 licensed.

@@ -1,0 +1,20 @@
+---
+title: Content workflow and site shell
+description: The first release of the Fieldnote site, plus the editorial workflow that now runs through GitCMS.
+date: "2026-09-24"
+version: 0.4.0
+summary: Added the handbook, author profiles, RSS, and a shared design system package.
+---
+
+**Added**
+
+- A shared `@repo/ui` package with Supabase-inspired tokens and typography.
+- Author profiles with linked journal entries.
+- An internal handbook with ordered sections.
+- RSS, sitemap, and robots routes.
+- Draft filtering in every collection loader.
+
+**Changed**
+
+- Journal entries are sorted by date in the loader instead of each page.
+- Site settings, navigation, and homepage copy moved into `content/site`.

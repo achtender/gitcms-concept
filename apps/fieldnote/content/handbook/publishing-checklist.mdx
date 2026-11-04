@@ -1,0 +1,36 @@
+---
+title: Publishing checklist
+description: The last ten minutes before a merge. A short list that catches the mistakes we actually make.
+section: Publishing
+order: 3
+updated: "2026-09-10"
+---
+
+Run through this list before merging a content pull request.
+
+## Content
+
+- [ ] Title is specific and in sentence case.
+- [ ] Description works as a standalone summary.
+- [ ] Date is correct and quoted in YAML.
+- [ ] Author slug points to an existing file in `content/authors`.
+- [ ] Tags are reused where possible.
+
+## Structure
+
+- [ ] Headings form a readable outline.
+- [ ] The first paragraph states the point.
+- [ ] The ending gives the reader a next step.
+- [ ] Long pieces have at least two `##` headings for the table of contents.
+
+## Technical
+
+- [ ] Internal links start with `/`.
+- [ ] Code blocks have a language.
+- [ ] Images have alt text.
+- [ ] The build passes locally.
+
+<Callout variant="note">
+  If a box cannot be checked, leave it unchecked and say why in the pull
+  request. A visible exception is easier to review than a silent one.
+</Callout>

@@ -1,0 +1,95 @@
+/*
+ * Typography utilities ported from the Supabase design system.
+ * https://supabase.com/design-system/docs/typography
+ *
+ * The names are intentionally kept close to Supabase's utilities so a team
+ * familiar with their system can move between the two. Marketing pages scale
+ * some headings up with explicit text sizes where needed.
+ */
+
+@utility heading-title {
+  @apply scroll-m-20 text-2xl tracking-tight;
+}
+
+@utility heading-section {
+  @apply scroll-m-20 text-xl tracking-tight;
+}
+
+@utility heading-subSection {
+  @apply scroll-m-20 text-base;
+}
+
+@utility heading-default {
+  @apply scroll-m-20 text-sm font-medium;
+}
+
+@utility heading-compact {
+  @apply scroll-m-20 text-xs font-medium;
+}
+
+@utility heading-meta {
+  @apply font-mono text-xs font-medium uppercase tracking-wider;
+}
+
+@utility text-default {
+  @apply text-base;
+}
+
+@utility text-subTitle {
+  @apply text-lg;
+}
+
+@utility text-compact {
+  @apply text-xs;
+}
+
+@utility display-hero {
+  @apply scroll-m-20 text-balance text-5xl font-medium tracking-tighter sm:text-6xl;
+}
+
+@utility display-section {
+  @apply scroll-m-20 text-balance text-3xl font-medium tracking-tight sm:text-4xl;
+}
+
+@utility text-link {
+  @apply text-foreground underline decoration-foreground-muted/50 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground;
+}
+
+@utility text-link-table-cell {
+  @apply cursor-pointer truncate underline decoration-foreground-muted/50 underline-offset-4 transition-colors duration-100 hover:decoration-foreground-lighter/80;
+}
+
+@layer base {
+  body {
+    @apply text-default;
+  }
+
+  h1 {
+    @apply heading-title;
+  }
+
+  h2 {
+    @apply heading-section;
+  }
+
+  h3 {
+    @apply heading-subSection;
+  }
+
+  h4,
+  h5 {
+    @apply heading-default;
+  }
+
+  h6 {
+    @apply heading-compact;
+  }
+
+  small {
+    @apply text-compact;
+  }
+
+  strong {
+    @apply font-medium;
+  }
+}

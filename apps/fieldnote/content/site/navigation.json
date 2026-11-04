@@ -1,0 +1,27 @@
+{
+  "primary": [
+    { "label": "Journal", "href": "/journal" },
+    { "label": "Handbook", "href": "/handbook" },
+    { "label": "Changelog", "href": "/changelog" },
+    { "label": "Authors", "href": "/authors" },
+    { "label": "About", "href": "/about" }
+  ],
+  "footer": [
+    {
+      "title": "Read",
+      "items": [
+        { "label": "Journal", "href": "/journal" },
+        { "label": "Handbook", "href": "/handbook" },
+        { "label": "Changelog", "href": "/changelog" }
+      ]
+    },
+    {
+      "title": "Studio",
+      "items": [
+        { "label": "About", "href": "/about" },
+        { "label": "Authors", "href": "/authors" },
+        { "label": "Contact", "href": "/contact" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "gitcms-examples",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:fieldnote": "turbo run dev --filter=@example/fieldnote",
+    "dev:mise": "turbo run dev --filter=@example/mise",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --website-url apps/fieldnote=https://fieldnote.example.com --website-url apps/mise=https://mise.example.com"
+  },
+  "devDependencies": {
+    "create-gitcms": "^0.2.4",
+    "turbo": "^2.11.10",
+    "typescript": "^5"
+  }
+}

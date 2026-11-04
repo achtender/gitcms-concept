@@ -1,0 +1,60 @@
+---
+title: A small CMS for a small team
+description: Why we moved our editorial workflow into Git, and what a content model looks like when it is designed for three people instead of three hundred.
+date: "2026-05-02"
+author: theo-renner
+category: Tools
+tags:
+  - gitcms
+  - workflow
+featured: true
+---
+
+Our editorial team is small. For a long time that meant a shared document, a folder of drafts, and a release checklist that lived in someone's head. It worked, mostly, until it did not.
+
+We wanted a CMS, but most of them wanted to become the centre of the project. So we tried the opposite: keep the content in the repository, and put a careful editing layer on top of it.
+
+## The shape of the content
+
+Fieldnote has five collections. Each one is a folder of Markdown or MDX files with validated frontmatter.
+
+| Collection | Purpose | Route |
+| --- | --- | --- |
+| `journal` | Long-form notes | `/journal/[slug]` |
+| `handbook` | Internal practice | `/handbook/[slug]` |
+| `changelog` | Release notes | `/changelog` |
+| `authors` | Contributor profiles | `/authors/[slug]` |
+| `pages` | Static pages | `/[slug]` |
+
+The route always comes from the collection name. That sounds obvious, but it means a new section is a folder and a page file, not a new database table and an admin screen.
+
+## Validation at the edge of the build
+
+Frontmatter is parsed with Zod before a page renders. If a required field is missing, the build fails with the file path and the field name.
+
+```ts
+export const journalFrontmatter = z.object({
+  title: z.string(),
+  description: z.string(),
+  date: dateString,
+  author: z.string(),
+  tags: z.array(z.string()).default([]),
+});
+```
+
+<Callout variant="note">
+  A failed build is a better editor than a silent default. The person who wrote
+  the file should be the first person to see the mistake.
+</Callout>
+
+## What Git buys us
+
+Every draft is a branch. Every review is a pull request. Every publish is a merge. None of that is novel, but it means our content history is the same history as our code, and our permissions are the permissions we already understand.
+
+The editing interface sits on top of that model instead of hiding it. That is the part we did not expect to like so much.
+
+## Keep the surface small
+
+A small team does not need a page builder. It needs a reliable path from an idea to a published URL, with enough structure that the site does not drift.
+
+So far, this one fits.

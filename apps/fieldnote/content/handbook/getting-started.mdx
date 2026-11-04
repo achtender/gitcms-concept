@@ -1,0 +1,46 @@
+---
+title: Getting started
+description: How the Fieldnote handbook is organised, and how to add a new page without inventing a new process.
+section: Foundations
+order: 1
+updated: "2026-09-01"
+---
+
+The handbook is the internal counterpart to the journal. It holds the practices we want to repeat, not the announcements we want people to read.
+
+## How a page is structured
+
+Every page uses the same frontmatter contract.
+
+```yaml
+---
+title: Getting started
+description: One sentence that explains the page.
+section: Foundations
+order: 1
+updated: "2026-09-01"
+---
+```
+
+The `section` groups related pages in the index. The `order` controls their position inside that group. Everything else is written in MDX.
+
+## Adding a page
+
+1. Create a new `.mdx` file in `content/handbook`.
+2. Add the frontmatter fields above.
+3. Write the body.
+4. Open a pull request. The build validates the frontmatter before anything is published.
+
+<Callout variant="note">
+  If you are unsure where a page belongs, start with the section that already
+  contains the closest neighbour. A new section is a bigger decision than a new
+  page.
+</Callout>
+
+## What belongs here
+
+- Reusable processes
+- Editorial standards
+- Technical conventions that affect content
+
+What does not belong: meeting notes, one-off announcements, and anything that only makes sense this week. Those go in the journal or the changelog.

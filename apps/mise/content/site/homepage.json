@@ -1,0 +1,18 @@
+{
+  "hero": {
+    "eyebrow": "Mise — Downtown & Harbour",
+    "title": "A small café for long mornings.",
+    "description": "Coffee roasted nearby, pastry baked before the doors open, and a menu that changes when the week does. Two rooms, one kitchen, no rush.",
+    "actions": [
+      { "label": "See the menu", "href": "/menu", "variant": "primary" },
+      { "label": "Find a table", "href": "/locations", "variant": "secondary" }
+    ]
+  },
+  "hours": [
+    { "days": "Mon – Fri", "hours": "7:00 – 18:00" },
+    { "days": "Sat – Sun", "hours": "8:00 – 17:00" }
+  ],
+  "featuredMenu": ["filter-coffee", "cardamom-bun", "miso-toast"],
+  "featuredJournal": ["opening-the-back-room"],
+  "locations": ["downtown", "harbour"]
+}

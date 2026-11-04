@@ -1,0 +1,203 @@
+{
+  "version": "1.2",
+  "media": {
+    "default_library": "repo_media",
+    "libraries": [
+      {
+        "key": "repo_media",
+        "label": "Repository media",
+        "driver": "git",
+        "storage": {
+          "root_path": "public"
+        },
+        "references": {
+          "write": {
+            "mode": "root_relative",
+            "base_path": "/"
+          },
+          "allow_default_library_fallback": true
+        },
+        "limits": {
+          "max_file_size_mb": 10
+        }
+      }
+    ]
+  },
+  "ssg_framework": "nextjs",
+  "frontmatter_format": "yaml",
+  "publishing_mode": "editorial_workflow",
+  "collections": [
+    {
+      "name": "menu",
+      "git_path": "/content/menu/",
+      "file_extension": ".mdx",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "description",
+          "type": "richtext",
+          "label": "Description"
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "label": "Category"
+        },
+        {
+          "name": "price",
+          "type": "number",
+          "label": "Price"
+        },
+        {
+          "name": "dietary",
+          "type": "multiselect",
+          "label": "Dietary",
+          "options": [
+            "Vegetarian"
+          ],
+          "color": "blue"
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "label": "Order"
+        },
+        {
+          "name": "featured",
+          "type": "boolean",
+          "label": "Featured",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "journal",
+      "git_path": "/content/journal/",
+      "file_extension": ".mdx",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "description",
+          "type": "richtext",
+          "label": "Description"
+        },
+        {
+          "name": "date",
+          "type": "datetime",
+          "label": "Date"
+        },
+        {
+          "name": "author",
+          "type": "text",
+          "label": "Author"
+        },
+        {
+          "name": "tags",
+          "type": "multiselect",
+          "label": "Tags",
+          "options": [
+            "shop",
+            "spaces"
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "name": "locations",
+      "git_path": "/content/locations/",
+      "file_extension": ".mdx",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "name",
+          "type": "title",
+          "label": "Name"
+        },
+        {
+          "name": "neighborhood",
+          "type": "text",
+          "label": "Neighborhood"
+        },
+        {
+          "name": "street",
+          "type": "text",
+          "label": "Street"
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "label": "City"
+        },
+        {
+          "name": "postalCode",
+          "type": "text",
+          "label": "Postal Code"
+        },
+        {
+          "name": "hours",
+          "type": "list",
+          "label": "Hours"
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "label": "Phone"
+        },
+        {
+          "name": "mapsUrl",
+          "type": "url",
+          "label": "Maps Url"
+        },
+        {
+          "name": "order",
+          "type": "number",
+          "label": "Order"
+        },
+        {
+          "name": "featured",
+          "type": "boolean",
+          "label": "Featured",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "pages",
+      "git_path": "/content/pages/",
+      "file_extension": ".mdx",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "description",
+          "type": "richtext",
+          "label": "Description"
+        },
+        {
+          "name": "updated",
+          "type": "datetime",
+          "label": "Updated"
+        }
+      ]
+    }
+  ]
+}

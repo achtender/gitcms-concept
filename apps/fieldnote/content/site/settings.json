@@ -1,0 +1,12 @@
+{
+  "name": "Fieldnote",
+  "tagline": "A working journal about calm software, careful design, and the teams behind it.",
+  "description": "Fieldnote is a small editorial studio. We write about software craft, design systems, and the quiet work of shipping things that last.",
+  "url": "https://fieldnote.example.com",
+  "locale": "en",
+  "email": "hello@fieldnote.example.com",
+  "socials": [
+    { "label": "GitHub", "href": "https://github.com/" },
+    { "label": "RSS", "href": "/rss.xml" }
+  ]
+}

@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@repo/ui/styles/tokens.css";
+@import "@repo/ui/styles/typography.css";
+@import "@repo/ui/styles/prose.css";
+@import "@repo/ui/styles/components.css";
+
+@source "../../../packages/ui/src";
+
+/*
+ * Mise keeps the Supabase token layer but moves the primary hue from the
+ * default green to a warm amber. Every semantic utility follows automatically.
+ */
+:root {
+  --primary-hue: 35;
+  --brand: hsl(24 72% 52%);
+}
