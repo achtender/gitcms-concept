@@ -4,13 +4,13 @@
     {
       "key": "fieldnote",
       "display_name": "Fieldnote",
-      "website_url": "https://fieldnote.example.com",
+      "website_url": "https://fieldnote.8ndr.de",
       "root_path": "apps/fieldnote"
     },
     {
       "key": "mise",
       "display_name": "Mise",
-      "website_url": "https://mise.example.com",
+      "website_url": "https://mise.8ndr.de",
       "root_path": "apps/mise"
     }
   ]

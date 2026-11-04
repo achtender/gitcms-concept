@@ -11,9 +11,13 @@
     "dev:fieldnote": "turbo run dev --filter=@example/fieldnote",
     "dev:mise": "turbo run dev --filter=@example/mise",
     "build": "turbo run build",
+    "build:fieldnote": "npm --prefix apps/fieldnote run build",
+    "build:mise": "npm --prefix apps/mise run build",
+    "start:fieldnote": "npm --prefix apps/fieldnote start",
+    "start:mise": "npm --prefix apps/mise start",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --website-url apps/fieldnote=https://fieldnote.example.com --website-url apps/mise=https://mise.example.com"
+    "gitcms:onboard": "create-gitcms --mode monorepo --site-root apps/fieldnote --site-root apps/mise --website-url apps/fieldnote=https://fieldnote.8ndr.de --website-url apps/mise=https://mise.8ndr.de"
   },
   "devDependencies": {
     "create-gitcms": "^0.2.4",

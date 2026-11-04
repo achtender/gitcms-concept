@@ -38,6 +38,10 @@ Useful commands:
 | `pnpm dev:fieldnote` | Run one site |
 | `pnpm dev:mise` | Run the café site |
 | `pnpm build` | Production build for every site |
+| `pnpm build:fieldnote` | Production build for Fieldnote only |
+| `pnpm build:mise` | Production build for Mise only |
+| `pnpm start:fieldnote` | Start the Fieldnote production build on port 3000 |
+| `pnpm start:mise` | Start the Mise production build on port 3000 |
 | `pnpm typecheck` | TypeScript across apps and packages |
 | `pnpm lint` | ESLint across both apps |
 | `pnpm gitcms:onboard` | Re-run the GitCMS monorepo onboarding CLI |
@@ -157,8 +161,8 @@ pnpm gitcms:onboard
 # create-gitcms --mode monorepo \
 #   --site-root apps/fieldnote \
 #   --site-root apps/mise \
-#   --website-url apps/fieldnote=https://fieldnote.example.com \
-#   --website-url apps/mise=https://mise.example.com
+#   --website-url apps/fieldnote=https://fieldnote.8ndr.de \
+#   --website-url apps/mise=https://mise.8ndr.de
 ```
 
 > **Do not hand-edit `.gitcms`.** GitCMS manages those files through its Settings UI. If you need to regenerate inference from content, re-run the onboarding CLI with `--force` and then review the result in GitCMS Settings.
@@ -225,8 +229,8 @@ The monorepo is designed for this:
      --site-root apps/fieldnote \
      --site-root apps/mise \
      --site-root apps/roastery \
-     --website-url apps/fieldnote=https://fieldnote.example.com \
-     --website-url apps/mise=https://mise.example.com \
+     --website-url apps/fieldnote=https://fieldnote.8ndr.de \
+     --website-url apps/mise=https://mise.8ndr.de \
      --website-url apps/roastery=https://roastery.example.com \
      --yes --force
    ```
@@ -277,28 +281,67 @@ Both sites use the same theme script, typography scale, prose styles, and MDX pi
 
 ## Deployment
 
-The apps build as standard Next.js static/SSG output. On Vercel, create **two projects** from the same repository:
+The two apps deploy as separate **Node.js (SSR)** sites on [xCloud](https://xcloud.host), from the same repository and branch.
+
+Both apps start on port `3000`, because that is the port configured in their `start` scripts. xCloud requires the application port to be free on the server, so run the two sites on separate servers. If they share a server, change one app's `start` script and its xCloud port instead.
 
 | Setting | Fieldnote | Mise |
 | --- | --- | --- |
-| Root directory | `apps/fieldnote` | `apps/mise` |
-| Build command | `pnpm --filter @example/fieldnote build` | `pnpm --filter @example/mise build` |
-| Install command | `pnpm install` at repo root | `pnpm install` at repo root |
-| Output | Next.js default | Next.js default |
+| App type | Node.js | Node.js |
+| Serving mode | SSR (Node process) | SSR (Node process) |
+| Repository / branch | this repo / `main` | this repo / `main` |
+| Node.js version | 24 | 24 |
+| Application port | `3000` | `3000` |
+| Start command | `npm run start:fieldnote` | `npm run start:mise` |
+| Web root | blank | blank |
+| Database | none | none |
+
+xCloud's Node.js runtime is server-wide, so both sites use the server's Node.js 24 installation.
+
+Turn on **Build & deploy script** for each site and use the matching commands.
+
+**Fieldnote**
+
+```bash
+cd "$PROJECT_DIR"
+npx --yes pnpm@12.16.1 install --frozen-lockfile --prod=false
+$XCLOUD_NPM run build:fieldnote
+```
+
+**Mise**
+
+```bash
+cd "$PROJECT_DIR"
+npx --yes pnpm@12.16.1 install --frozen-lockfile --prod=false
+$XCLOUD_NPM run build:mise
+```
+
+The build script installs the pinned pnpm version with `npx` because the workspace uses `workspace:*` dependencies, which xCloud's default npm install does not understand. `--prod=false` keeps the dev dependencies that Next.js and Tailwind need at build time. Only the app for that site is compiled, not both apps.
+
+Set the following in each site's **Environment** editor:
+
+```text
+NODE_ENV=production
+PORT=3000
+NEXT_TELEMETRY_DISABLED=1
+```
+
+`PORT` must match xCloud's **Application Port**. The app start scripts also bind `3000`, so the two values stay aligned.
 
 `outputFileTracingRoot` is already pointed at the monorepo root in each `next.config.ts`, so tracing includes the shared packages.
 
-Before deploying, replace the placeholder domains:
+The production domains are already set in the content:
 
-- `apps/fieldnote/content/site/settings.json` → `https://fieldnote.example.com`
-- `apps/mise/content/site/settings.json` → `https://mise.example.com`
-- `.gitcms/sites.jsonc` → update the site URLs through GitCMS Settings (not by hand)
-- Sitemap URLs in GitCMS Settings
+- `apps/fieldnote/content/site/settings.json` → `https://fieldnote.8ndr.de`
+- `apps/mise/content/site/settings.json` → `https://mise.8ndr.de`
+- `.gitcms/sites.jsonc` → managed through GitCMS Settings, not by hand
+
+Enable push to deploy so a commit published through GitCMS rebuilds the site. The pages are statically generated at build time, so content changes need a new deployment rather than a running CMS process.
 
 ## Notes and limitations
 
 - Example URLs, email addresses, phone numbers, and social links are placeholders.
 - Cover images are generated with CSS; no external image host is required. Add real images to `public/` and set `cover: /images/...` when you have them.
 - The `.gitcms` config is intentionally generated rather than tuned by hand. Treat the Settings UI as the source of truth for collection fields.
-- Config version 1.2 is what `create-gitcms@0.2.4` produces. Accept the 1.4 upgrade in GitCMS when prompted.
+- The repository uses GitCMS config version 1.4. `create-gitcms@0.2.4` still generates 1.2, so accept the 1.4 upgrade in GitCMS when prompted.
 - The design token layer is adapted from Supabase's Apache-2.0-licensed design system. See the comments in `packages/ui/src/styles/`.
